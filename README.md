@@ -41,7 +41,7 @@ React
 
 Quick start options:
 
-- Download from [Creative Tim](https://www.creative-tim.com/product/muse-ant-design-dashboard?ref=readme-madd).
+- Download from [BluePink](https://www.creative-tim.com/product/muse-ant-design-dashboard?ref=readme-madd).
 
 ## Terminal Commands
 
@@ -117,16 +117,16 @@ If you have questions or need help integrating the product please [contact us](h
 
 ## Licensing
 
-- Copyright 2021 [Creative Tim](https://www.creative-tim.com?ref=readme-madd)
-- Creative Tim [license](https://www.creative-tim.com/license?ref=readme-madd)
+- Copyright 2021 [BluePink](https://www.creative-tim.com?ref=readme-madd)
+- BluePink [license](https://www.creative-tim.com/license?ref=readme-madd)
 
 ## Useful Links
 
-- [More products](https://www.creative-tim.com/templates?ref=readme-madd) from Creative Tim
+- [More products](https://www.creative-tim.com/templates?ref=readme-madd) from BluePink
 
 - [Tutorials](https://www.youtube.com/channel/UCVyTG4sCw-rOvB9oHkzZD1w)
 
-- [Freebies](https://www.creative-tim.com/templates/free?ref=readme-madd) from Creative Tim
+- [Freebies](https://www.creative-tim.com/templates/free?ref=readme-madd) from BluePink
 
 - [Affiliate Program](https://www.creative-tim.com/affiliates/new?ref=readme-madd) (earn money)
 

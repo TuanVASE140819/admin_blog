@@ -3,9 +3,9 @@
 * Muse Ant Design Dashboard - v1.0.0
 =========================================================
 * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+* Copyright 2021 BluePink (https://www.creative-tim.com)
 * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-* Coded by Creative Tim
+* Coded by BluePink
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
@@ -128,7 +128,7 @@ export default class SignUp extends Component {
         <div className="layout-default ant-layout layout-sign-up">
           <Header>
             <div className="header-col header-brand">
-              <h5>Muse Dashboard</h5>
+              <h5>AdminBlog</h5>
             </div>
             <div className="header-col header-nav">
               <Menu mode="horizontal" defaultSelectedKeys={["1"]}>
@@ -287,7 +287,7 @@ export default class SignUp extends Component {
             </Menu>
             <p className="copyright">
               {" "}
-              Copyright © 2021 Muse by <a href="#pablo">Creative Tim</a>.{" "}
+              Copyright © 2024 Muse by <a href="#pablo">BluePink</a>.{" "}
             </p>
           </Footer>
         </div>
