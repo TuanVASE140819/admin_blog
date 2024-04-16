@@ -76,6 +76,11 @@ const columns = [
     key: "district",
   },
   {
+    title: "Nhóm",
+    dataIndex: "group",
+    key: "group",
+  },
+  {
     title: "Action",
     key: "action",
     render: (text, record) => (
@@ -128,6 +133,15 @@ const data = [
         </div>
       </>
     ),
+    group: (
+      <>
+        {/* hiện thị bao nhiêu nhóm */}
+        <Button className="ant-employed">
+          <span>1</span>
+          Nhóm
+        </Button>
+      </>
+    ),
   },
   {
     key: "2",
@@ -168,6 +182,15 @@ const data = [
         </div>
       </>
     ),
+    group: (
+      <>
+        {/* hiện thị bao nhiêu nhóm */}
+        <Button className="ant-employed">
+          <span>1</span>
+          Nhóm
+        </Button>
+      </>
+    ),
   },
   {
     key: "3",
@@ -206,6 +229,15 @@ const data = [
         <div className="ant-employed">
           <span>Long Thành</span>
         </div>
+      </>
+    ),
+    group: (
+      <>
+        {/* hiện thị bao nhiêu nhóm */}
+        <Button className="ant-employed">
+          <span>1</span>
+          Nhóm
+        </Button>
       </>
     ),
   },
