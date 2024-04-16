@@ -23,7 +23,8 @@ import "./assets/styles/main.css";
 import "./assets/styles/responsive.css";
 import Chat from "./pages/Chat";
 import Blog from "./pages/Blog";
-
+import Doctor from "./pages/manager-school";
+import EditSchool from "./pages/Edit-school";
 function App() {
   return (
     <div className="App">
@@ -32,8 +33,10 @@ function App() {
         <Route path="/sign-in" exact component={SignIn} />
         <Main>
           <Route exact path="/dashboard" component={Home} />
+          <Route path="/manager-school/edit/:key" component={EditSchool} />
           <Route exact path="/tables" component={Tables} />
           <Route exact path="/chat" component={Chat} />
+          <Route exact path="/manager-school" component={Doctor} />
           <Route exact path="/blog" component={Blog} />
           <Route exact path="/billing" component={Billing} />
           <Route exact path="/rtl" component={Rtl} />
