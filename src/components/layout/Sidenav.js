@@ -233,8 +233,21 @@ function Sidenav({ color }) {
             <span className="label">Chuyên gia content AI</span>
           </NavLink>
         </Menu.Item>
+        <Menu.Item key="3">
+          <NavLink to="/manager-account">
+            <span
+              className="icon"
+              style={{
+                background: page === "manager-user" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Quản lý người dùng</span>
+          </NavLink>
+        </Menu.Item>
         <Menu.SubMenu key="sub1" title="Quản lý nội dung">
-          <Menu.Item key="3">
+          <Menu.Item key="4">
             <NavLink to="/manager-school">
               <span
                 className="icon"

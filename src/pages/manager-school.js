@@ -9,7 +9,7 @@
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Row,
@@ -26,6 +26,7 @@ import {
   Select,
   Input,
   Modal,
+  Pagination,
 } from "antd";
 
 import {
@@ -40,6 +41,8 @@ import face2 from "../assets/images/face-2.jpg";
 import Search from "antd/lib/transfer/search";
 // import style.css
 import "./style.css";
+
+import { getListSchool } from "../api/apiService";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -58,8 +61,8 @@ const columns = [
   },
   {
     title: "Cấp bậc",
-    dataIndex: "level",
-    key: "level",
+    dataIndex: "captruong",
+    key: "captruong",
   },
   {
     title: (
@@ -67,13 +70,13 @@ const columns = [
         <EnvironmentOutlined /> Tỉnh
       </>
     ),
-    dataIndex: "province",
-    key: "province",
+    dataIndex: "tinh",
+    key: "tinh",
   },
   {
     title: "Huyện",
-    dataIndex: "district",
-    key: "district",
+    dataIndex: "quan",
+    key: "quan",
   },
   {
     title: "Nhóm",
@@ -248,7 +251,37 @@ function ManagerSchool() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [searchTerm, setSearchTerm] = useState(""); // Add this line
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+  const [schools, setSchools] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [option, setOption] = useState("");
+  useEffect(() => {
+    const fetchSchools = async () => {
+      const response = await getListSchool(
+        selectedProvince || "",
+        selectedDistrict || "",
+        "",
+        "",
+        "",
+        currentPage,
+        pageSize
+      );
+      setSchools(response.data);
+      setTotalItems(response.paging.totalItems);
+    };
+
+    fetchSchools();
+  }, [currentPage, pageSize]);
+
+  const handlePageChange = (page, pageSize) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
 
   const onProvinceChange = (value) => setSelectedProvince(value);
   const onDistrictChange = (value) => setSelectedDistrict(value);
@@ -266,12 +299,20 @@ function ManagerSchool() {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  // const filteredData = data.filter(
-  //   (item) =>
-  //     item.province === selectedProvince &&
-  //     item.district === selectedDistrict &&
 
-  // );
+  useEffect(() => {
+    getListSchool(
+      selectedProvince || "",
+      selectedDistrict || "",
+      "",
+      "",
+      "",
+      1,
+      10
+    ).then((res) => {
+      setSchools(res.data);
+    });
+  }, []);
 
   return (
     <>
@@ -323,7 +364,7 @@ function ManagerSchool() {
                   <Button
                     type="primary"
                     icon={<SearchOutlined />}
-                    onClick={onSearch}
+                    // onClick={performSearch}
                     style={{ marginLeft: 10 }}
                   >
                     Search
@@ -334,9 +375,16 @@ function ManagerSchool() {
               <div className="table-responsive">
                 <Table
                   columns={columns}
-                  dataSource={data}
+                  dataSource={schools}
                   pagination={false}
                   className="ant-border-space styled-table"
+                />
+                <Pagination
+                  current={currentPage}
+                  pageSize={pageSize}
+                  total={totalItems}
+                  onChange={handlePageChange}
+                  className="custom-pagination"
                 />
               </div>
             </Card>

@@ -14,3 +14,41 @@
   color: black;
 }
 
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.custom-pagination .ant-pagination-item {
+  border-radius: 20px;
+  margin: 0 5px;
+}
+
+.custom-pagination .ant-pagination-item a {
+  color: #000;
+}
+
+.custom-pagination .ant-pagination-item-active {
+  background-color: #4caf50;
+}
+
+.custom-pagination .ant-pagination-item-active a {
+  color: #fff;
+}
+
+.custom-pagination .ant-pagination-prev,
+.custom-pagination .ant-pagination-next {
+  color: #000;
+}
+
+.custom-pagination .ant-pagination-prev:focus .ant-pagination-item-link,
+.custom-pagination .ant-pagination-next:focus .ant-pagination-item-link,
+.custom-pagination .ant-pagination-prev:hover .ant-pagination-item-link,
+.custom-pagination .ant-pagination-next:hover .ant-pagination-item-link {
+  color: #4caf50;
+}
+
+.avatar-uploader .ant-upload {
+  border-radius: 50%;
+}
