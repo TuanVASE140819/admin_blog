@@ -1,51 +1,13 @@
-/*!
-=========================================================
-* Muse Ant Design Dashboard - v1.0.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-* Copyright 2021 BluePink (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-* Coded by BluePink
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 import React, { useEffect, useState } from "react";
 
-import {
-  Row,
-  Col,
-  Card,
-  Radio,
-  Table,
-  Upload,
-  message,
-  Progress,
-  Button,
-  Avatar,
-  Typography,
-  Select,
-  Input,
-  Modal,
-  Pagination,
-} from "antd";
+import { Row, Col, Card, Table, Button, Pagination, Tag, Input } from "antd";
 
-import {
-  SearchOutlined,
-  ToTopOutlined,
-  UserOutlined,
-  EnvironmentOutlined,
-} from "@ant-design/icons";
+import { SearchOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-import face2 from "../assets/images/face-2.jpg";
-import Search from "antd/lib/transfer/search";
-// import style.css
 import "./style.css";
 
-import { getAccount, updateAccount } from "../api/apiService";
-
-const { Title } = Typography;
-const { Option } = Select;
+import { getAccount } from "../api/apiService";
 
 // table code start
 const columns = [
@@ -74,6 +36,15 @@ const columns = [
     title: "Trạng thái",
     dataIndex: "status",
     key: "status",
+    render: (text, record) => (
+      <>
+        {record.status === "active" ? (
+          <Tag color="green">Hoạt động</Tag>
+        ) : (
+          <Tag color="red">Không hoạt động</Tag>
+        )}
+      </>
+    ),
   },
   {
     title: "Action",
@@ -81,7 +52,7 @@ const columns = [
     render: (text, record) => (
       <>
         <Link to={`/manager-account/edit/${record.id}`}>
-          <Button type="primary">Edit</Button>
+          <Button type="primary">Chỉnh sửa</Button>
         </Link>
       </>
     ),

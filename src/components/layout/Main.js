@@ -64,6 +64,9 @@ function Main({ children }) {
           className={`layout-dashboard ${
             pathname === "rtl" ? "layout-dashboard-rtl" : ""
           }`}
+          style={{
+            backgroundColor: "rgb(24, 144, 255);",
+          }}
         >
           <Sider
             trigger={null}

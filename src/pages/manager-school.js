@@ -90,7 +90,7 @@ const columns = [
     key: "action",
     render: (text, record) => (
       <>
-        <Link to={`/manager-school/edit/${record.key}`}>
+        <Link to={`/manager-school/edit/${record.id}`}>
           <Button type="primary">Edit</Button>
         </Link>
       </>

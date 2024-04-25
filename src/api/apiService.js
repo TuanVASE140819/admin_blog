@@ -97,6 +97,7 @@ export const InactiveorActiveAccount = async (id) => {
     console.error("Error fetching data:", error);
   }
 };
+
 export const createAccount = async (data) => {
   try {
     const response = await API.post(`/api/v1/Account/createAccount`, data);
@@ -116,6 +117,17 @@ export const updateAccount = async (data) => {
   }
 };
 
+
+
+//https://apiweloveschool20240421134825.azurewebsites.net/api/v1/School/updateSchool
+export const updateSchool = async (data) => {
+  try {
+    const response = await API.put(`/api/v1/School/updateSchool`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
 
 export const fetchData = async () => {
   try {

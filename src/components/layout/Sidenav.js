@@ -162,6 +162,7 @@ function Sidenav({ color }) {
 
   return (
     <>
+      <div></div>
       <div className="brand">
         <img src={logo} alt="" />
         <span>WELOVESCHOOL</span>
@@ -220,7 +221,7 @@ function Sidenav({ color }) {
             <span className="label">Quản lý Blog</span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="2">
+        {/* <Menu.Item key="2">
           <NavLink to="/chat">
             <span
               className="icon"
@@ -232,7 +233,7 @@ function Sidenav({ color }) {
             </span>
             <span className="label">Chuyên gia content AI</span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="3">
           <NavLink to="/manager-account">
             <span
@@ -246,7 +247,7 @@ function Sidenav({ color }) {
             <span className="label">Quản lý người dùng</span>
           </NavLink>
         </Menu.Item>
-        <Menu.SubMenu key="sub1" title="Quản lý nội dung">
+        <Menu.SubMenu key="sub1" title="Quản lý ">
           <Menu.Item key="4">
             <NavLink to="/manager-school">
               <span
@@ -257,7 +258,7 @@ function Sidenav({ color }) {
               >
                 {billing}
               </span>
-              <span className="label">Quản lý nội dung</span>
+              <span className="label">Quản lý trường</span>
             </NavLink>
           </Menu.Item>
           {/* Thêm các menu item khác vào đây */}

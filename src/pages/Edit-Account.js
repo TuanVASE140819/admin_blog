@@ -13,13 +13,17 @@ import {
   DatePicker,
   Tag,
   Modal,
+  Alert,
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import Title from "antd/lib/skeleton/Title";
 
-import { getAccountDetail, InactiveorActiveAccount } from "../api/apiService";
-
+import {
+  getAccountDetail,
+  InactiveorActiveAccount,
+  updateAccount,
+} from "../api/apiService";
 
 import moment from "moment";
 const { Option } = Select;
@@ -85,8 +89,22 @@ const EditAccount = () => {
   }, [id, form]);
 
   const onFinish = (values) => {
-    console.log("Received values:", values);
-    // Handle form submission here
+    Modal.confirm({
+      title: "Are you sure you want to save these changes?",
+      content: "If you click OK, the changes will be saved.",
+      onOk() {
+        updateAccount(values)
+          .then((response) => {
+            console.log("Update successful:", response);
+          })
+          .catch((error) => {
+            console.error("Update failed:", error);
+          });
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
   };
 
   console.log("account", dateOfBirth);
@@ -169,16 +187,10 @@ const EditAccount = () => {
                     <Form.Item
                       label="Địa chỉ :"
                       name="address"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng điền địa chỉ",
-                        },
-                      ]}
                       labelCol={{ span: 24 }} // label takes the full width
                       wrapperCol={{ span: 24 }} // control takes the full width
                     >
-                      <Input style={{ width: "300px" }} />
+                      <Input style={{ width: "300px" }} disabled />
                     </Form.Item>
                     <Form.Item
                       label="Email :"
@@ -233,12 +245,6 @@ const EditAccount = () => {
                   <Form.Item
                     label="Trạng thái :"
                     name="status"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Vui lòng nhập tên tài khoản",
-                      },
-                    ]}
                     labelCol={{ span: 24 }} // label takes the full width
                     wrapperCol={{ span: 24 }} // control takes the full width
                   >
@@ -309,7 +315,7 @@ const EditAccount = () => {
             <Row>
               <Col span={24} style={{ textAlign: "right" }}>
                 <Button type="primary" htmlType="submit">
-                  Lưu
+                  Save
                 </Button>
               </Col>
             </Row>
