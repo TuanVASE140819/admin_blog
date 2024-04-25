@@ -65,7 +65,9 @@ export const createSchool = async (data) => {
 export const getAccount = async (name, pageNumber, pageSize) => {
   try {
     const response = await API.get(
-      `/api/v1/Account/getAccount?name=${name}&pageNumber=${pageNumber}&pageSize=${pageSize}`
+      `/api/v1/Account/getAccount?name=${
+        name || ""
+      }&pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
     return response.data;
   } catch (error) {

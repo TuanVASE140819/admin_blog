@@ -164,7 +164,7 @@ function Sidenav({ color }) {
     <>
       <div className="brand">
         <img src={logo} alt="" />
-        <span>AdminBlog</span>
+        <span>WELOVESCHOOL</span>
       </div>
       <hr />
       <Menu theme="light" mode="inline">
