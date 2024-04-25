@@ -42,7 +42,7 @@ import Search from "antd/lib/transfer/search";
 // import style.css
 import "./style.css";
 
-import { getAccount } from "../api/apiService";
+import { getAccount, updateAccount } from "../api/apiService";
 
 const { Title } = Typography;
 const { Option } = Select;

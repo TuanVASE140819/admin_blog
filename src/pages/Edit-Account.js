@@ -20,6 +20,8 @@ import Title from "antd/lib/skeleton/Title";
 
 import { getAccountDetail, InactiveorActiveAccount } from "../api/apiService";
 
+
+import moment from "moment";
 const { Option } = Select;
 
 const getBase64 = (img, callback) => {
@@ -40,18 +42,33 @@ const beforeUpload = (file) => {
   return isJpgOrPng && isLt2M;
 };
 
-const uploadButton = (
-  <div>
-    <PlusOutlined />
-    <div style={{ marginTop: 8 }}>Upload</div>
-  </div>
-);
-
 const EditAccount = () => {
-  const [imageUrl, setImageUrl] = useState(null);
-  const handleChange = (info) => {};
+  const today = moment(new Date().getDate(), "DD/MM/YYYY");
+  const [loading, setLoading] = useState(false);
 
+  const [imageUrl, setImageUrl] = useState(null);
+  const handleChange = (info) => {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (imageUrl) => {
+        setImageUrl(imageUrl);
+        setLoading(false);
+      });
+    }
+  };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
   const [account, setAccount] = useState(null);
+  const [dateOfBirth, setDateOfBirth] = useState(null);
   const [form] = Form.useForm();
   const { id } = useParams();
 
@@ -59,6 +76,7 @@ const EditAccount = () => {
     getAccountDetail(id)
       .then((response) => {
         setAccount(response.data);
+        setDateOfBirth(response.data.dob);
         form.setFieldsValue(response.data); // Set form fields value
       })
       .catch((error) => {
@@ -70,7 +88,8 @@ const EditAccount = () => {
     console.log("Received values:", values);
     // Handle form submission here
   };
-  console.log("account", account?.name);
+
+  console.log("account", dateOfBirth);
   return (
     //    // dùng antd  để tạo thành 2 dòng 1 cột
     <div>
@@ -132,23 +151,20 @@ const EditAccount = () => {
                       />
                     </Form.Item>
                     {/*  form date */}
+
                     <Form.Item
-                      label="Ngày sinh:"
-                      name="date"
+                      label="Ngày sinh :"
+                      name="dob"
                       rules={[
                         {
                           required: true,
-                          message: "Nhập ngày sinh",
+                          message: "Vui lòng nhập ngày sinh",
                         },
                       ]}
                       labelCol={{ span: 24 }} // label takes the full width
                       wrapperCol={{ span: 24 }} // control takes the full width
                     >
-                      {/* DATE */}
-                      <DatePicker
-                        format="DD/MM/YYYY"
-                        style={{ width: "300px" }}
-                      />
+                      <Input style={{ width: "300px" }} />
                     </Form.Item>
                     <Form.Item
                       label="Địa chỉ :"
@@ -208,7 +224,7 @@ const EditAccount = () => {
                   </Form.Item>
                   <Form.Item
                     label="Ngày tạo :"
-                    name="createDate"
+                    name="createAt"
                     labelCol={{ span: 24 }} // label takes the full width
                     wrapperCol={{ span: 24 }} // control takes the full width
                   >

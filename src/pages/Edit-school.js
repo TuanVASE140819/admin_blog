@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Form, Input, Button, Select, Upload, message } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
-
+import { updateAccount } from "../api/apiService"; // Assuming updateAccount is imported correctly
 const { Option } = Select;
 
 const getBase64 = (img, callback) => {
@@ -19,7 +19,7 @@ const beforeUpload = (file) => {
   }
   const isLt2M = file.size / 1024 / 1024 < 2;
   if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
+    message.error("Image must be smaller than 2MB!");
   }
   return isJpgOrPng && isLt2M;
 };
@@ -47,6 +47,7 @@ const EditSchool = () => {
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    updateAccount(values);
   };
 
   const onFinishFailed = (errorInfo) => {

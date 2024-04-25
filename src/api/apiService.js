@@ -51,6 +51,16 @@ export const getSchoolDetail = async (id) => {
     console.error("Error fetching data:", error);
   }
 };
+
+// https://apiweloveschool20240421134825.azurewebsites.net/api/v1/School/createSchool
+export const createSchool = async (data) => {
+  try {
+    const response = await API.post(`/api/v1/School/createSchool`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
 //apiweloveschool20240421134825.azurewebsites.net/api/v1/Account/getAccount?name=333&pageNumber=1&pageSize=10
 export const getAccount = async (name, pageNumber, pageSize) => {
   try {
@@ -85,6 +95,14 @@ export const InactiveorActiveAccount = async (id) => {
     console.error("Error fetching data:", error);
   }
 };
+export const createAccount = async (data) => {
+  try {
+    const response = await API.post(`/api/v1/Account/createAccount`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
 
 //https://apiweloveschool20240421134825.azurewebsites.net/api/v1/Account/updateAccount
 export const updateAccount = async (data) => {
@@ -95,6 +113,7 @@ export const updateAccount = async (data) => {
     console.error("Error fetching data:", error);
   }
 };
+
 
 export const fetchData = async () => {
   try {
