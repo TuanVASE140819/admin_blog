@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Form, Input, Button, Select, Upload, message, Col, Row } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Upload,
+  message,
+  Col,
+  Row,
+  Modal,
+} from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { getSchoolDetail, updateSchool } from "../api/apiService"; // Assuming updateAccount is imported correctly
@@ -51,15 +61,23 @@ const EditSchool = () => {
   const onDistrictChange = (value) => setSelectedDistrict(value);
 
   const onFinish = (values) => {
-    updateSchool(id, values)
-      .then((response) => {
-        console.log("Update successful:", response);
-      })
-      .catch((error) => {
-        console.error("Update failed:", error);
-      });
+    Modal.confirm({
+      title: "Are you sure you want to save these changes?",
+      content: "If you click OK, the changes will be saved.",
+      onOk() {
+        updateSchool({ ...values, id })
+          .then((response) => {
+            console.log("Update successful:", response);
+          })
+          .catch((error) => {
+            console.error("Update failed:", error);
+          });
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
   };
-
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -81,34 +99,22 @@ const EditSchool = () => {
     >
       {/*  chi là 2 cột */}
       <Row>
-        <Col span={12}>
+        <Col span={24}>
           <Form.Item
             label="Banner:"
             name="banner"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập banner",
-              },
-            ]}
             labelCol={{ span: 24 }} // label takes the full width
             wrapperCol={{ span: 24 }} // control takes the full width
           >
-            <Input style={{ width: "500px" }} />
+            <Input style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
             label="avatar:"
             name="avatar"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập avatar",
-              },
-            ]}
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
-            <Input style={{ width: "500px" }} />
+            <Input style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
             label="Tên trường:"
@@ -122,182 +128,181 @@ const EditSchool = () => {
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
-            <Input style={{ width: "500px" }} />
+            <Input style={{ width: "100%" }} />
           </Form.Item>
+          <div
+            style={{
+              display: "flex",
+              // justifyContent: "center",
+              // alignItems: "center",
+              width: "100%",
+            }}
+          >
+            <Form.Item
+              label="Tỉnh/Thành phố:"
+              name="tinh"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn tỉnh/thành phố",
+                },
+              ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                onChange={onProvinceChange}
+                allowClear
+              >
+                <Option value="HCM">Hồ Chí Minh</Option>
+                <Option value="HN">Hà Nội</Option>
+                <Option value="DN">Đà Nẵng</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Quận/Huyện:"
+              name="quan"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn quận/huyện",
+                },
+              ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                onChange={onDistrictChange}
+                allowClear
+              >
+                <Option value="1">Quận 1</Option>
+                <Option value="2">Quận 2</Option>
+                <Option value="3">Quận 3</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Xã/Phường:"
+              name="xa"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn quận/huyện",
+                },
+              ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                onChange={onDistrictChange}
+                allowClear
+              >
+                <Option value="1">Quận 1</Option>
+                <Option value="2">Quận 2</Option>
+                <Option value="3">Quận 3</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Cấp học:"
+              name="level"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập mô tả",
+                },
+              ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                onChange={onDistrictChange}
+                allowClear
+              >
+                <Option value="1">Mầm non</Option>
+                <Option value="2">Tiểu học</Option>
+                <Option value="3">Trung học</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="Khu vực:"
+              name="countryid"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập mô tả",
+                },
+              ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Select
+                style={{ width: "100%" }}
+                onChange={onDistrictChange}
+                allowClear
+              >
+                <Option value="vietnam">Việt Nam</Option>
+              </Select>
+            </Form.Item>
+          </div>
+
           <Form.Item
             label="Địa chỉ:"
             name="address"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập địa chỉ",
-              },
-            ]}
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
-            <Input style={{ width: "500px" }} />
+            <Input style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
             label="Số điện thoại:"
             name="phone"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập số điện thoại",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Vui lòng nhập số điện thoại",
+            //   },
+            // ]}
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
-            <Input style={{ width: "500px" }} />
+            <Input style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
             label="Email:"
             name="email"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập email",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Vui lòng nhập email",
+            //   },
+            // ]}
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
-            <Input style={{ width: "500px" }} />
-          </Form.Item>
-        </Col>
-
-        <Col span={12}>
-          <Form.Item
-            label="Tỉnh/Thành phố:"
-            name="tinh"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn tỉnh/thành phố",
-              },
-            ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Select
-              style={{ width: "500px" }}
-              onChange={onProvinceChange}
-              allowClear
-            >
-              <Option value="HCM">Hồ Chí Minh</Option>
-              <Option value="HN">Hà Nội</Option>
-              <Option value="DN">Đà Nẵng</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Quận/Huyện:"
-            name="quan"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn quận/huyện",
-              },
-            ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Select
-              style={{ width: "500px" }}
-              onChange={onDistrictChange}
-              allowClear
-            >
-              <Option value="1">Quận 1</Option>
-              <Option value="2">Quận 2</Option>
-              <Option value="3">Quận 3</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Xã/Phường:"
-            name="xa"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn quận/huyện",
-              },
-            ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Select
-              style={{ width: "500px" }}
-              onChange={onDistrictChange}
-              allowClear
-            >
-              <Option value="1">Quận 1</Option>
-              <Option value="2">Quận 2</Option>
-              <Option value="3">Quận 3</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Cấp học:"
-            name="level"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập mô tả",
-              },
-            ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Select
-              style={{ width: "500px" }}
-              onChange={onDistrictChange}
-              allowClear
-            >
-              <Option value="1">Mầm non</Option>
-              <Option value="2">Tiểu học</Option>
-              <Option value="3">Trung học</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Khu vực:"
-            name="countryid"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập mô tả",
-              },
-            ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Select
-              style={{ width: "500px" }}
-              onChange={onDistrictChange}
-              allowClear
-            >
-              <Option value="1">Mầm non</Option>
-              <Option value="2">Tiểu học</Option>
-              <Option value="3">Trung học</Option>
-            </Select>
+            <Input style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
             label="nội dung:"
             name="content"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập mô tả",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Vui lòng nhập mô tả",
+            //   },
+            // ]}
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
           >
-            <TextArea style={{ width: "500px" }} />
+            <TextArea style={{ width: "100%" }} />
           </Form.Item>
         </Col>
       </Row>
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Save
+          Cập nhật
         </Button>
       </Form.Item>
     </Form>

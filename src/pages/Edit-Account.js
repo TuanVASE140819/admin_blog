@@ -223,7 +223,7 @@ const EditAccount = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Vui lòng nhập tên tài khoản",
+                        message: "Vui lòng chon quyền",
                       },
                     ]}
                     labelCol={{ span: 24 }} // label takes the full width
@@ -300,7 +300,7 @@ const EditAccount = () => {
                     rules={[
                       {
                         required: true,
-                        message: "Vui lòng nhập tên tài khoản",
+                        message: "Vui lòng nhập ghi chú",
                       },
                     ]}
                     labelCol={{ span: 24 }} // label takes the full width
