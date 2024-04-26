@@ -201,7 +201,7 @@ const EditSchool = () => {
               >
                 {province &&
                   province.map((item) => (
-                    <Option key={item.province_id} value={item.province_id}>
+                    <Option key={item.province_id} value={item.province_name}>
                       {item.province_name}
                     </Option>
                   ))}
@@ -226,7 +226,7 @@ const EditSchool = () => {
               >
                 {district &&
                   district.map((item) => (
-                    <Option key={item.district_id} value={item.district_id}>
+                    <Option key={item.district_id} value={item.district_name}>
                       {item.district_name}
                     </Option>
                   ))}
