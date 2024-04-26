@@ -14,6 +14,7 @@ import {
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { getSchoolDetail, updateSchool } from "../api/apiService"; // Assuming updateAccount is imported correctly
+import axios from "axios";
 const { Option } = Select;
 
 const getBase64 = (img, callback) => {
@@ -38,7 +39,12 @@ const EditSchool = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
+  const [selectedLevel, setSelectedLevel] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [province, setProvince] = useState("");
+  const [district, setDistrict] = useState("");
+  const [ward, setWard] = useState("");
   const [school, setSchool] = useState(null);
   const [Logo, setLogo] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -54,11 +60,50 @@ const EditSchool = () => {
         console.error(error);
       });
   }, [id, form]);
-  // in ra tên trường
-  console.log("school", school);
 
   const onProvinceChange = (value) => setSelectedProvince(value);
   const onDistrictChange = (value) => setSelectedDistrict(value);
+  const onWardChange = (value) => setSelectedWard(value);
+  const onLevelChange = (value) => setSelectedLevel(value);
+
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      const response = await axios.get(
+        "https://vapi.vnappmob.com/api/province"
+      );
+      //  bỏ kí tự "tỉnh " và "thành phố " trong tên tỉnh name
+      const provinces = response.data.results.map((item) => ({
+        province_id: item.province_id,
+        province_name: item.province_name
+          .replace("Tỉnh ", "")
+          .replace("Thành phố ", ""),
+      }));
+
+      setProvince(provinces);
+    };
+    fetchProvinces();
+  }, []);
+
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      const response = await axios.get(
+        `https://vapi.vnappmob.com/api/province/district/${selectedProvince}`
+      );
+
+      const districts = response.data.results.map((item) => ({
+        district_id: item.district_id,
+        district_name: item.district_name
+          .replace("Huyện ", "")
+          .replace("Quận ", ""),
+      }));
+
+      console.log("districts", districts);
+      setDistrict(districts);
+    };
+    if (selectedProvince) {
+      fetchDistricts();
+    }
+  }, [selectedProvince || ""]);
 
   const onFinish = (values) => {
     Modal.confirm({
@@ -82,7 +127,6 @@ const EditSchool = () => {
     console.log("Failed:", errorInfo);
   };
 
-  console.log("school", school); // This will log "null" initially, then the actual school object once the API call is complete
   return (
     <Form
       form={form}
@@ -99,7 +143,7 @@ const EditSchool = () => {
     >
       {/*  chi là 2 cột */}
       <Row>
-        <Col span={24}>
+        <Col span={12}>
           <Form.Item
             label="Banner:"
             name="banner"
@@ -109,7 +153,7 @@ const EditSchool = () => {
             <Input style={{ width: "100%" }} />
           </Form.Item>
           <Form.Item
-            label="avatar:"
+            label="Avatar:"
             name="avatar"
             labelCol={{ span: 24 }}
             wrapperCol={{ span: 24 }}
@@ -155,9 +199,12 @@ const EditSchool = () => {
                 onChange={onProvinceChange}
                 allowClear
               >
-                <Option value="HCM">Hồ Chí Minh</Option>
-                <Option value="HN">Hà Nội</Option>
-                <Option value="DN">Đà Nẵng</Option>
+                {province &&
+                  province.map((item) => (
+                    <Option key={item.province_id} value={item.province_id}>
+                      {item.province_name}
+                    </Option>
+                  ))}
               </Select>
             </Form.Item>
             <Form.Item
@@ -177,9 +224,12 @@ const EditSchool = () => {
                 onChange={onDistrictChange}
                 allowClear
               >
-                <Option value="1">Quận 1</Option>
-                <Option value="2">Quận 2</Option>
-                <Option value="3">Quận 3</Option>
+                {district &&
+                  district.map((item) => (
+                    <Option key={item.district_id} value={item.district_id}>
+                      {item.district_name}
+                    </Option>
+                  ))}
               </Select>
             </Form.Item>
             <Form.Item
@@ -299,6 +349,7 @@ const EditSchool = () => {
             <TextArea style={{ width: "100%" }} />
           </Form.Item>
         </Col>
+        <Col span={12}>Đang cập nhật</Col>
       </Row>
       <Form.Item>
         <Button type="primary" htmlType="submit">
