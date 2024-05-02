@@ -15,24 +15,17 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { getSchoolDetail, updateSchool } from "../api/apiService"; // Assuming updateAccount is imported correctly
 import axios from "axios";
+
+
+
+import { uploadFile } from "../api/Firebase/uploadFile";
+
 const { Option } = Select;
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
   reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
-};
-
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must be smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
 };
 
 const EditSchool = () => {
@@ -48,6 +41,7 @@ const EditSchool = () => {
   const [school, setSchool] = useState(null);
   const [Logo, setLogo] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
   const [form] = Form.useForm();
   const { id } = useParams();
 
@@ -65,6 +59,46 @@ const EditSchool = () => {
   const onDistrictChange = (value) => setSelectedDistrict(value);
   const onWardChange = (value) => setSelectedWard(value);
   const onLevelChange = (value) => setSelectedLevel(value);
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
+
+  function beforeUpload(file) {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  }
+
+  function handleChange(info) {
+    if (info.file.status === "uploading") {
+      setLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, (imageUrl) => {
+        setLoading(false);
+        setImageUrl(imageUrl);
+        form.setFieldsValue({ banner: imageUrl });
+      });
+    }
+  }
+
+  function getBase64(img, callback) {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -150,7 +184,21 @@ const EditSchool = () => {
             labelCol={{ span: 24 }} // label takes the full width
             wrapperCol={{ span: 24 }} // control takes the full width
           >
-            <Input style={{ width: "100%" }} />
+            <Upload
+              name="banner"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              action={uploadFile}
+              beforeUpload={beforeUpload}
+              onChange={handleChange}
+            >
+              {imageUrl ? (
+                <img src={imageUrl} alt="banner" style={{ width: "100%" }} />
+              ) : (
+                uploadButton
+              )}
+            </Upload>
           </Form.Item>
           <Form.Item
             label="Avatar:"
