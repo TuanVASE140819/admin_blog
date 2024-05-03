@@ -10,13 +10,13 @@ import {
   Col,
   Row,
   Modal,
+  Card,
+  Descriptions,
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/lib/input/TextArea";
 import { getSchoolDetail, updateSchool } from "../api/apiService"; // Assuming updateAccount is imported correctly
 import axios from "axios";
-
-
 
 import { uploadFile } from "../api/Firebase/uploadFile";
 
@@ -28,6 +28,58 @@ const getBase64 = (img, callback) => {
   reader.readAsDataURL(img);
 };
 
+const information = [
+  {
+    title: "Diễn đàn hội nhóm đời sống",
+    description:
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse ",
+    user: "1354",
+  },
+  {
+    title: "Diễn đàn hội nhóm đời sống",
+    description:
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse ",
+    user: "1354",
+  },
+];
+
+const pencil = [
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    key={0}
+  >
+    <path
+      d="M13.5858 3.58579C14.3668 2.80474 15.6332 2.80474 16.4142 3.58579C17.1953 4.36683 17.1953 5.63316 16.4142 6.41421L15.6213 7.20711L12.7929 4.37868L13.5858 3.58579Z"
+      className="fill-gray-7"
+    ></path>
+    <path
+      d="M11.3787 5.79289L3 14.1716V17H5.82842L14.2071 8.62132L11.3787 5.79289Z"
+      className="fill-gray-7"
+    ></path>
+  </svg>,
+];
+const deletebtn = [
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    key={0}
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M9 2C8.62123 2 8.27497 2.214 8.10557 2.55279L7.38197 4H4C3.44772 4 3 4.44772 3 5C3 5.55228 3.44772 6 4 6L4 16C4 17.1046 4.89543 18 6 18H14C15.1046 18 16 17.1046 16 16V6C16.5523 6 17 5.55228 17 5C17 4.44772 16.5523 4 16 4H12.618L11.8944 2.55279C11.725 2.214 11.3788 2 11 2H9ZM7 8C7 7.44772 7.44772 7 8 7C8.55228 7 9 7.44772 9 8V14C9 14.5523 8.55228 15 8 15C7.44772 15 7 14.5523 7 14V8ZM12 7C11.4477 7 11 7.44772 11 8V14C11 14.5523 11.4477 15 12 15C12.5523 15 13 14.5523 13 14V8C13 7.44772 12.5523 7 12 7Z"
+      fill="#111827"
+      className="fill-danger"
+    ></path>
+  </svg>,
+];
 const EditSchool = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedProvince, setSelectedProvince] = useState("");
@@ -177,230 +229,366 @@ const EditSchool = () => {
     >
       {/*  chi là 2 cột */}
       <Row>
-        <Col span={12}>
-          <Form.Item
-            label="Banner:"
-            name="banner"
-            labelCol={{ span: 24 }} // label takes the full width
-            wrapperCol={{ span: 24 }} // control takes the full width
-          >
-            <Upload
-              name="banner"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              action={uploadFile}
-              beforeUpload={beforeUpload}
-              onChange={handleChange}
-            >
-              {imageUrl ? (
-                <img src={imageUrl} alt="banner" style={{ width: "100%" }} />
-              ) : (
-                uploadButton
-              )}
-            </Upload>
-          </Form.Item>
-          <Form.Item
-            label="Avatar:"
-            name="avatar"
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Input style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item
-            label="Tên trường:"
-            name="name"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập tên trường",
-              },
-            ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Input style={{ width: "100%" }} />
-          </Form.Item>
-          <div
+        <Col span={12} className="ant-card header-solid h-full">
+          <Col
+            span={24}
+            md={24}
             style={{
-              display: "flex",
-              // justifyContent: "center",
-              // alignItems: "center",
-              width: "100%",
+              marginLeft: "20px",
+              marginRight: "20px",
             }}
+            className="mb-24 m-3"
           >
             <Form.Item
-              label="Tỉnh/Thành phố:"
-              name="tinh"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng chọn tỉnh/thành phố",
-                },
-              ]}
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
+              label="Banner:"
+              name="banner"
+              labelCol={{ span: 24 }} // label takes the full width
+              wrapperCol={{ span: 24 }} // control takes the full width
             >
-              <Select
-                style={{ width: "100%" }}
-                onChange={onProvinceChange}
-                allowClear
+              <Upload
+                name="banner"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                action={uploadFile}
+                beforeUpload={beforeUpload}
+                onChange={handleChange}
               >
-                {province &&
-                  province.map((item) => (
-                    <Option key={item.province_id} value={item.province_name}>
-                      {item.province_name}
-                    </Option>
-                  ))}
-              </Select>
+                {imageUrl ? (
+                  <img src={imageUrl} alt="banner" style={{ width: "100%" }} />
+                ) : (
+                  uploadButton
+                )}
+              </Upload>
             </Form.Item>
             <Form.Item
-              label="Quận/Huyện:"
-              name="quan"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng chọn quận/huyện",
-                },
-              ]}
+              label="Avatar:"
+              name="avatar"
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <Select
-                style={{ width: "100%" }}
-                onChange={onDistrictChange}
-                allowClear
-              >
-                {district &&
-                  district.map((item) => (
-                    <Option key={item.district_id} value={item.district_name}>
-                      {item.district_name}
-                    </Option>
-                  ))}
-              </Select>
+              <Input style={{ width: "100%" }} />
             </Form.Item>
             <Form.Item
-              label="Xã/Phường:"
-              name="xa"
+              label="Tên trường:"
+              name="name"
               rules={[
                 {
                   required: true,
-                  message: "Vui lòng chọn quận/huyện",
+                  message: "Vui lòng nhập tên trường",
                 },
               ]}
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <Select
-                style={{ width: "100%" }}
-                onChange={onDistrictChange}
-                allowClear
-              >
-                <Option value="1">Quận 1</Option>
-                <Option value="2">Quận 2</Option>
-                <Option value="3">Quận 3</Option>
-              </Select>
+              <Input style={{ width: "100%" }} />
             </Form.Item>
-            <Form.Item
-              label="Cấp học:"
-              name="level"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nhập mô tả",
-                },
-              ]}
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
+            <div
+              style={{
+                display: "flex",
+                // justifyContent: "center",
+                // alignItems: "center",
+                width: "100%",
+              }}
             >
-              <Select
-                style={{ width: "100%" }}
-                onChange={onDistrictChange}
-                allowClear
+              <Form.Item
+                label="Tỉnh/Thành phố:"
+                name="tinh"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng chọn tỉnh/thành phố",
+                  },
+                ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
               >
-                <Option value="1">Mầm non</Option>
-                <Option value="2">Tiểu học</Option>
-                <Option value="3">Trung học</Option>
-              </Select>
-            </Form.Item>
-            <Form.Item
-              label="Khu vực:"
-              name="countryid"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nhập mô tả",
-                },
-              ]}
-              labelCol={{ span: 24 }}
-              wrapperCol={{ span: 24 }}
-            >
-              <Select
-                style={{ width: "100%" }}
-                onChange={onDistrictChange}
-                allowClear
+                <Select
+                  style={{ width: "100%" }}
+                  onChange={onProvinceChange}
+                  allowClear
+                >
+                  {province &&
+                    province.map((item) => (
+                      <Option key={item.province_id} value={item.province_name}>
+                        {item.province_name}
+                      </Option>
+                    ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="Quận/Huyện:"
+                name="quan"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng chọn quận/huyện",
+                  },
+                ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
               >
-                <Option value="vietnam">Việt Nam</Option>
-              </Select>
-            </Form.Item>
-          </div>
+                <Select
+                  style={{ width: "100%" }}
+                  onChange={onDistrictChange}
+                  allowClear
+                >
+                  {district &&
+                    district.map((item) => (
+                      <Option key={item.district_id} value={item.district_name}>
+                        {item.district_name}
+                      </Option>
+                    ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="Xã/Phường:"
+                name="xa"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng chọn quận/huyện",
+                  },
+                ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Select
+                  style={{ width: "100%" }}
+                  onChange={onDistrictChange}
+                  allowClear
+                >
+                  <Option value="1">Quận 1</Option>
+                  <Option value="2">Quận 2</Option>
+                  <Option value="3">Quận 3</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="Cấp học:"
+                name="level"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mô tả",
+                  },
+                ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Select
+                  style={{ width: "100%" }}
+                  onChange={onDistrictChange}
+                  allowClear
+                >
+                  <Option value="1">Mầm non</Option>
+                  <Option value="2">Tiểu học</Option>
+                  <Option value="3">Trung học</Option>
+                </Select>
+              </Form.Item>
+              <Form.Item
+                label="Khu vực:"
+                name="countryid"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng nhập mô tả",
+                  },
+                ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Select
+                  style={{ width: "100%" }}
+                  onChange={onDistrictChange}
+                  allowClear
+                >
+                  <Option value="vietnam">Việt Nam</Option>
+                </Select>
+              </Form.Item>
+            </div>
 
-          <Form.Item
-            label="Địa chỉ:"
-            name="address"
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Input style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item
-            label="Số điện thoại:"
-            name="phone"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Vui lòng nhập số điện thoại",
-            //   },
-            // ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Input style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item
-            label="Email:"
-            name="email"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Vui lòng nhập email",
-            //   },
-            // ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <Input style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item
-            label="nội dung:"
-            name="content"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Vui lòng nhập mô tả",
-            //   },
-            // ]}
-            labelCol={{ span: 24 }}
-            wrapperCol={{ span: 24 }}
-          >
-            <TextArea style={{ width: "100%" }} />
-          </Form.Item>
+            <Form.Item
+              label="Địa chỉ:"
+              name="address"
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Input style={{ width: "100%" }} />
+            </Form.Item>
+            <Form.Item
+              label="Số điện thoại:"
+              name="phone"
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Vui lòng nhập số điện thoại",
+              //   },
+              // ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Input style={{ width: "100%" }} />
+            </Form.Item>
+            <Form.Item
+              label="Email:"
+              name="email"
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Vui lòng nhập email",
+              //   },
+              // ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <Input style={{ width: "100%" }} />
+            </Form.Item>
+            <Form.Item
+              label="nội dung:"
+              name="content"
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Vui lòng nhập mô tả",
+              //   },
+              // ]}
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <TextArea style={{ width: "100%" }} />
+            </Form.Item>
+          </Col>
         </Col>
-        <Col span={12}>Đang cập nhật</Col>
+        <Col span={12}>
+          <Col
+            span={24}
+            md={24}
+            style={{
+              marginLeft: "20px",
+              marginRight: "20px",
+            }}
+            className="mb-24 m-3"
+          >
+            <Card
+              className="header-solid h-full"
+              bordered={false}
+              title={[<h6 className="font-semibold m-0">Quản lý group</h6>]}
+              bodyStyle={{ paddingTop: "0" }}
+              extra={
+                <Button type="link" className="darkbtn">
+                  Xem thêm
+                </Button>
+              }
+            >
+              <Row gutter={[24, 24]}>
+                {information.map((i, index) => (
+                  <Col span={24} key={index}>
+                    <Card className="card-billing-info" bordered="false">
+                      <div className="col-info">
+                        <Descriptions title={i.title} span={3}>
+                          <Descriptions.Item
+                            label="Số lượng thành viên"
+                            span={3}
+                          >
+                            {i.user}
+                          </Descriptions.Item>
+                        </Descriptions>
+                      </div>
+                      <div className="col-action">
+                        <Button type="link" danger>
+                          {deletebtn}DELETE
+                        </Button>
+                        <Button type="link" className="darkbtn">
+                          {pencil} EDIT
+                        </Button>
+                      </div>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </Card>
+          </Col>
+
+          <Col
+            span={24}
+            md={24}
+            style={{
+              marginLeft: "20px",
+              marginRight: "20px",
+            }}
+            className="mb-24 m-3"
+          >
+            <Card
+              title="Bài viết nổi bật"
+              extra={
+                <Button type="link" className="darkbtn">
+                  Xem thêm
+                </Button>
+              }
+            >
+              <Card
+                type="inner"
+                title="Thiên Nhiên"
+                extra={
+                  <Button type="link" className="darkbtn">
+                    Xem
+                  </Button>
+                }
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    // font bold
+                    fontWeight: "bold",
+                  }}
+                >
+                  "Điểm Dừng Kỷ Niệm: Gặp Lại Bạn Học Cũ Trên Đường Đời"
+                </div>
+              </Card>
+              <Card
+                style={{
+                  marginTop: 16,
+                }}
+                type="inner"
+                title="Thiên Nhiên"
+                extra={
+                  <Button type="link" className="darkbtn">
+                    Xem
+                  </Button>
+                }
+              >
+                <div
+                  className="site-card-wrapper"
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    // font bold
+                    fontWeight: "bold",
+                  }}
+                >
+                  "Điểm Dừng Kỷ Niệm: Gặp Lại Bạn Học Cũ Trên Đường Đời"
+                </div>
+              </Card>
+            </Card>
+          </Col>
+        </Col>
       </Row>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
+      <Form.Item
+        // wrapperCol={{ offset: 8, span: 16 }}
+        style={{
+          // giữ nguyên trên màn hình
+          // position: "fixed",
+          // bottom: "0",
+          // width: "100%",
+          backgroundColor: "white",
+          padding: "20px",
+          margin: "20px",
+          border: "1px solid #e9e9e9",
+          borderRadius: "5px",
+        }}
+      >
+        <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
           Cập nhật
         </Button>
       </Form.Item>
