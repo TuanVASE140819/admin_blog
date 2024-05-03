@@ -36,8 +36,14 @@ export const uploadFile = async (file, folder) => {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(`Upload is ${progress}% done`);
         },
-        reject,
-        resolve
+        (error) => {
+          // Handle unsuccessful uploads
+          console.error("Error uploading file:", error);
+          reject(error);
+        },
+        () => {
+          resolve(uploadTask.snapshot);
+        }
       );
     });
 
