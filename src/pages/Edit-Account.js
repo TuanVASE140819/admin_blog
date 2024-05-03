@@ -25,52 +25,30 @@ import {
   updateAccount,
 } from "../api/apiService";
 
+import { imageDb } from "../api/Firebase/Config";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
+
 import moment from "moment";
 const { Option } = Select;
 
-const getBase64 = (img, callback) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
-};
-
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
-};
-
 const EditAccount = () => {
-  const today = moment(new Date().getDate(), "DD/MM/YYYY");
-  const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState(null);
+  const uploadFileAndGetURL = async (file) => {
+    // Create a reference to the file in Firebase Storage
+    const storageRef = ref(imageDb, `files/${v4()}`);
 
-  const [imageUrl, setImageUrl] = useState(null);
-  const handleChange = (info) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, (imageUrl) => {
-        setImageUrl(imageUrl);
-        setLoading(false);
+    // Upload the file
+    await uploadBytes(storageRef, file).then((value) => {
+      console.log(value);
+      getDownloadURL(value.ref).then((url) => {
+        console.log(url);
+        setUrl(url);
+        return url;
       });
-    }
+    });
   };
 
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
   const [account, setAccount] = useState(null);
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [form] = Form.useForm();
@@ -93,7 +71,7 @@ const EditAccount = () => {
       title: "Are you sure you want to save these changes?",
       content: "If you click OK, the changes will be saved.",
       onOk() {
-        updateAccount(values)
+        updateAccount(values, url ? { ...values, avatar: "url" } : values)
           .then((response) => {
             console.log("Update successful:", response);
           })
@@ -107,9 +85,10 @@ const EditAccount = () => {
     });
   };
 
-  console.log("account", dateOfBirth);
+  console.log("avatar", url);
   return (
     //    // dùng antd  để tạo thành 2 dòng 1 cột
+
     <div>
       <Row>
         <Card
@@ -121,26 +100,53 @@ const EditAccount = () => {
             <Col span={24}>
               <Row gutter={16}>
                 <Col span={3}>
-                  {/* Upload ảnh bo tròn */}
                   <Upload
-                    name="avatar"
+                    action={uploadFileAndGetURL}
                     listType="picture-card"
-                    className="avatar-uploader"
                     showUploadList={false}
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    beforeUpload={beforeUpload}
-                    onChange={handleChange}
+                    beforeUpload={(file) => {
+                      const isJpgOrPng =
+                        file.type === "image/jpeg" || file.type === "image/png";
+                      if (!isJpgOrPng) {
+                        message.error("You can only upload JPG/PNG file!");
+                      }
+                      return isJpgOrPng;
+                    }}
+                    onChange={(info) => {
+                      if (info.file.status === "done") {
+                        message.success(
+                          `${info.file.name} file uploaded successfully`
+                        );
+                        uploadFileAndGetURL(info.file.originFileObj).then(
+                          (url) => {
+                            form.setFieldsValue({ avatar: url });
+                          }
+                        );
+                      } else if (info.file.status === "error") {
+                        message.error(`${info.file.name} file upload failed.`);
+                      }
+                    }}
                   >
-                    {imageUrl ? (
-                      <img
-                        src={imageUrl}
-                        alt="avatar"
-                        style={{ width: "100%" }}
-                      />
+                    {url ? (
+                      <img src={url} alt="avatar" style={{ width: "100%" }} />
                     ) : (
-                      uploadButton
+                      <div>
+                        {url ? (
+                          <img
+                            src={url}
+                            alt="avatar"
+                            style={{ width: "100%" }}
+                          />
+                        ) : (
+                          <div>
+                            <PlusOutlined />
+                            <div style={{ marginTop: 8 }}>Upload</div>
+                          </div>
+                        )}
+                      </div>
                     )}
                   </Upload>
+                  <Input style={{ width: "300px" }} disabled value={url} />
                 </Col>
                 <Col span={8}>
                   <div
@@ -154,12 +160,6 @@ const EditAccount = () => {
                     <Form.Item
                       label="Họ và tên:"
                       name="name"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Vui lòng nhập tên tài khoản",
-                        },
-                      ]}
                       labelCol={{ span: 24 }} // label takes the full width
                       wrapperCol={{ span: 24 }} // control takes the full width
                     >
@@ -256,6 +256,40 @@ const EditAccount = () => {
                   </Form.Item>
                 </Col>
                 <Col span={3}>
+                  <Form
+                    name="basic"
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: "20px",
+                    }}
+                  >
+                    {/* Card */}
+                    <Card
+                      title={
+                        <div style={{ textAlign: "center" }}>
+                          <img
+                            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/coins/75efaf1b556a8e2fac6ab9383e95d4e3.png"
+                            width="50px"
+                            height="50px"
+                            alt="coin"
+                          />
+                          <h3>
+                            400 <span>Coins</span>
+                          </h3>
+                        </div>
+                      }
+                      style={{ width: 300 }}
+                    >
+                      <Alert
+                        message="Thông báo"
+                        description="Khi bạn nhấn OK, trạng thái tài khoản sẽ thay đổi"
+                        type="info"
+                      />
+                    </Card>
+                  </Form>
                   <Button
                     type="primary"
                     danger

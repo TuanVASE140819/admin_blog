@@ -131,7 +131,9 @@ export const updateSchool = async (data) => {
 
 export const fetchData = async () => {
   try {
-    const response = await API.get("/path-to-resource");
+    const response = await fetch("/path-to-resource", {
+      mode: "no-cors",
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);

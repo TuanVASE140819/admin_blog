@@ -29,7 +29,7 @@ function Main({ children }) {
   const openDrawer = () => setVisible(!visible);
   const handleSidenavType = (type) => setSidenavType(type);
   const handleSidenavColor = (color) => setSidenavColor(color);
-  const handleFixedNavbar = (type) => setFixed(type);
+  // const handleFixedNavbar = (type) => setFixed(type);
 
   let { pathname } = useLocation();
   pathname = pathname.replace("/", "");
@@ -100,26 +100,32 @@ function Main({ children }) {
       <Layout>
         {fixed ? (
           <Affix>
-            <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
+            <AntHeader className="ant-header-fixed">
               <Header
                 onPress={openDrawer}
                 name={pathname}
                 subName={pathname}
                 handleSidenavColor={handleSidenavColor}
                 handleSidenavType={handleSidenavType}
-                handleFixedNavbar={handleFixedNavbar}
+                handleFixedNavbar={{
+                  setFixed: setFixed,
+                  fixed: fixed,
+                }}
               />
             </AntHeader>
           </Affix>
         ) : (
-          <AntHeader className={`${fixed ? "ant-header-fixed" : ""}`}>
+          <AntHeader className="ant-header-fixed">
             <Header
               onPress={openDrawer}
               name={pathname}
               subName={pathname}
               handleSidenavColor={handleSidenavColor}
               handleSidenavType={handleSidenavType}
-              handleFixedNavbar={handleFixedNavbar}
+              handleFixedNavbar={{
+                setFixed: setFixed,
+                fixed: fixed,
+              }}
             />
           </AntHeader>
         )}

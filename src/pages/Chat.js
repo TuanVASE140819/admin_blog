@@ -36,6 +36,7 @@ function Chat() {
 
       fetch(url, {
         method: "POST",
+        mode: "no-cors",
         headers: {
           Authorization: "Bearer " + accessToken,
           "Content-Type": "application/json",

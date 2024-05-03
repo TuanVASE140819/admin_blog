@@ -22,7 +22,8 @@ import {
   message,
   Button,
   Timeline,
-  Radio,
+  Tabs,
+  Avatar,
 } from "antd";
 import {
   ToTopOutlined,
@@ -45,6 +46,7 @@ import team2 from "../assets/images/team-2.jpg";
 import team3 from "../assets/images/team-3.jpg";
 import team4 from "../assets/images/team-4.jpg";
 import card from "../assets/images/info-card-1.jpg";
+import Meta from "antd/lib/card/Meta";
 
 function Home() {
   const { Title, Text } = Typography;
@@ -141,154 +143,83 @@ function Home() {
   ];
   const count = [
     {
-      today: "Today’s Sales",
-      title: "$53,000",
-      persent: "+30%",
+      today: "Trường",
+      title: "1,200",
       icon: dollor,
       bnb: "bnb2",
     },
     {
-      today: "Today’s Users",
+      today: "Người dùng",
       title: "3,200",
-      persent: "+20%",
+
       icon: profile,
       bnb: "bnb2",
     },
-    {
-      today: "New Clients",
-      title: "+1,200",
-      persent: "-20%",
-      icon: heart,
-      bnb: "redtext",
-    },
-    {
-      today: "New Orders",
-      title: "$13,200",
-      persent: "10%",
-      icon: cart,
-      bnb: "bnb2",
-    },
+    // {
+    //   today: "New Clients",
+    //   title: "+1,200",
+    //   persent: "-20%",
+    //   icon: heart,
+    //   bnb: "redtext",
+    // },
+    // {
+    //   today: "New Orders",
+    //   title: "$13,200",
+    //   persent: "10%",
+    //   icon: cart,
+    //   bnb: "bnb2",
+    // },
   ];
 
   const list = [
     {
       img: ava1,
-      Title: "Soft UI Shopify Version",
-      bud: "$14,000",
-      progress: <Progress percent={60} size="small" />,
-      member: (
-        <div className="avatar-group mt-2">
-          <Tooltip placement="bottom" title="Ryan Tompson">
-            <img className="tootip-img" src={team1} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Romina Hadid">
-            <img className="tootip-img" src={team2} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Alexander Smith">
-            <img className="tootip-img" src={team3} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Jessica Doe">
-            <img className="tootip-img" src={team4} alt="" />
-          </Tooltip>
-        </div>
-      ),
+      Title: "Trường 1",
+      number: "1000",
     },
     {
       img: ava2,
-      Title: "Progress Track",
-      bud: "$3,000",
-      progress: <Progress percent={10} size="small" />,
-      member: (
-        <div className="avatar-group mt-2">
-          <Tooltip placement="bottom" title="Ryan Tompson">
-            <img className="tootip-img" src={team1} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Romina Hadid">
-            <img className="tootip-img" src={team2} alt="" />
-          </Tooltip>
-        </div>
-      ),
+      Title: "Trường 1",
+      number: "1000",
     },
     {
       img: ava3,
-      Title: "Fix Platform Errors",
-      bud: "Not Set",
-      progress: <Progress percent={100} size="small" status="active" />,
-      member: (
-        <div className="avatar-group mt-2">
-          <Tooltip placement="bottom" title="Ryan Tompson">
-            <img className="tootip-img" src={team1} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Romina Hadid">
-            <img className="tootip-img" src={team1} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Alexander Smith">
-            <img className="tootip-img" src={team3} alt="" />
-          </Tooltip>
-        </div>
-      ),
+      Title: "Trường 1",
+      number: "1000",
     },
     {
       img: ava4,
-      Title: "Launch new Mobile App",
-      bud: "$20,600",
-      progress: <Progress percent={100} size="small" status="active" />,
-      member: (
-        <div className="avatar-group mt-2">
-          <Tooltip placement="bottom" title="Ryan Tompson">
-            <img className="tootip-img" src={team1} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Romina Hadid">
-            <img className="tootip-img" src={team2} alt="" />
-          </Tooltip>
-        </div>
-      ),
+      Title: "Trường 1",
+      number: "1000",
     },
     {
       img: ava5,
-      Title: "Add the New Landing Page",
-      bud: "$4,000",
-      progress: <Progress percent={80} size="small" />,
-      member: (
-        <div className="avatar-group mt-2">
-          <Tooltip placement="bottom" title="Ryan Tompson">
-            <img className="tootip-img" src={team1} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Romina Hadid">
-            <img className="tootip-img" src={team2} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Alexander Smith">
-            <img className="tootip-img" src={team3} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Jessica Doe">
-            <img className="tootip-img" src={team4} alt="" />
-          </Tooltip>
-        </div>
-      ),
+      Title: "Trường 1",
+      number: "1000",
     },
 
     {
       img: ava6,
-      Title: "Redesign Online Store",
-      bud: "$2,000",
-      progress: (
-        <Progress
-          percent={100}
-          size="small"
-          status="exception"
-          format={() => "Cancel"}
-        />
-      ),
-      member: (
-        <div className="avatar-group mt-2">
-          <Tooltip placement="bottom" title="Ryan Tompson">
-            <img className="tootip-img" src={team1} alt="" />
-          </Tooltip>
-          <Tooltip placement="bottom" title="Romina Hadid">
-            <img className="tootip-img" src={team2} alt="" />
-          </Tooltip>
-        </div>
-      ),
+      Title: "Trường 1",
+      number: "1000",
+    },
+  ];
+
+  const author = [
+    {
+      role: "ADMIN TỔNG",
+    },
+    {
+      role: "ADMIN ALL SCHOOL",
+    },
+    {
+      role: "ADMIN SCHOOL TỈNH",
+    },
+    {
+      role: "ADMIN SCHOOL",
+    },
+    {
+      role: "ADMIN GROUP",
     },
   ];
 
@@ -321,24 +252,6 @@ function Home() {
       color: "gray",
     },
   ];
-
-  const uploadProps = {
-    name: "file",
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    headers: {
-      authorization: "authorization-text",
-    },
-    onChange(info) {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
 
   return (
     <>
@@ -388,168 +301,164 @@ function Home() {
 
         <Row gutter={[24, 0]}>
           <Col xs={24} sm={24} md={12} lg={12} xl={16} className="mb-24">
-            <Card bordered={false} className="criclebox cardbody h-full">
-              <div className="project-ant">
-                <div>
-                  <Title level={5}>Projects</Title>
-                  <Paragraph className="lastweek">
-                    done this month<span className="blue">40%</span>
-                  </Paragraph>
-                </div>
-                <div className="ant-filtertabs">
-                  <div className="antd-pro-pages-dashboard-analysis-style-salesExtra">
-                    <Radio.Group onChange={onChange} defaultValue="a">
-                      <Radio.Button value="a">ALL</Radio.Button>
-                      <Radio.Button value="b">ONLINE</Radio.Button>
-                      <Radio.Button value="c">STORES</Radio.Button>
-                    </Radio.Group>
+            <Card
+              bordered={false}
+              className="criclebox cardbody h-full"
+              style={{
+                borderRadius: "10px",
+                boxShadow: "0px 0px 20px 0px rgba(0, 0, 0, 0.08)",
+                padding: "20px",
+              }}
+            >
+              <Title level={5}>BẢNG XẾP HẠNG</Title>
+              <Tabs
+                defaultActiveKey="1"
+                onChange={
+                  (key) => console.log(key)
+                  // setActiveTab(key)
+                }
+                className="card-tabs"
+              >
+                <Tabs.TabPane tab="Trường học nổi bật" key="1">
+                  <div className="ant-list-box table-responsive">
+                    <table className="width-100">
+                      <thead>
+                        <tr>
+                          <th>TOP</th>
+                          <th>TRƯỜNG</th>
+                          <th>RATTING</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {list.map((d, index) => (
+                          <tr key={index}>
+                            <td>
+                              {/* Sô thứ tự */}
+                              <span
+                                style={{
+                                  backgroundColor: "#f0f0f0",
+                                  borderRadius: "50%",
+                                  width: "30px",
+                                  height: "30px",
+                                  display: "inline-block",
+                                  lineHeight: "30px",
+                                  textAlign: "center",
+                                }}
+                              >
+                                {index + 1}
+                              </span>
+                            </td>
+                            <td>
+                              <h6>
+                                <img
+                                  src={d.img}
+                                  alt=""
+                                  className="avatar-sm mr-10"
+                                />{" "}
+                                {d.Title}
+                              </h6>
+                            </td>
+                            <td>{d.number}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
-                </div>
-              </div>
-              <div className="ant-list-box table-responsive">
-                <table className="width-100">
-                  <thead>
-                    <tr>
-                      <th>COMPANIES</th>
-                      <th>MEMBERS</th>
-                      <th>BUDGET</th>
-                      <th>COMPLETION</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {list.map((d, index) => (
-                      <tr key={index}>
-                        <td>
-                          <h6>
-                            <img
-                              src={d.img}
-                              alt=""
-                              className="avatar-sm mr-10"
-                            />{" "}
-                            {d.Title}
-                          </h6>
-                        </td>
-                        <td>{d.member}</td>
-                        <td>
-                          <span className="text-xs font-weight-bold">
-                            {d.bud}{" "}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="percent-progress">{d.progress}</div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="uploadfile shadow-none">
-                <Upload {...uploadProps}>
-                  <Button
-                    type="dashed"
-                    className="ant-full-box"
-                    icon={<ToTopOutlined />}
-                  >
-                    <span className="click">Click to Upload</span>
-                  </Button>
-                </Upload>
-              </div>
+                </Tabs.TabPane>
+                <Tabs.TabPane tab="Trường học nổi bật 2" key="2">
+                  <div className="ant-list-box table-responsive">
+                    <table className="width-100">
+                      <thead>
+                        <tr>
+                          <th>TOP</th>
+                          <th>TRƯỜNG</th>
+                          <th>RATTING</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {list.map((d, index) => (
+                          <tr key={index}>
+                            <td>
+                              {/* Sô thứ tự */}
+                              <span
+                                style={{
+                                  backgroundColor: "#f0f0f0",
+                                  borderRadius: "50%",
+                                  width: "30px",
+                                  height: "30px",
+                                  display: "inline-block",
+                                  lineHeight: "30px",
+                                  textAlign: "center",
+                                }}
+                              >
+                                {index + 1}
+                              </span>
+                            </td>
+                            <td>
+                              <h6>
+                                <img
+                                  src={d.img}
+                                  alt=""
+                                  className="avatar-sm mr-10"
+                                />{" "}
+                                {d.Title}
+                              </h6>
+                            </td>
+                            <td>{d.number}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </Tabs.TabPane>
+              </Tabs>
             </Card>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={8} className="mb-24">
             <Card bordered={false} className="criclebox h-full">
+              <></>
               <div className="timeline-box">
-                <Title level={5}>Orders History</Title>
-                <Paragraph className="lastweek" style={{ marginBottom: 24 }}>
-                  this month <span className="bnb2">20%</span>
-                </Paragraph>
-
-                <Timeline
-                  pending="Recording..."
-                  className="timelinelist"
-                  reverse={reverse}
-                >
-                  {timelineList.map((t, index) => (
-                    <Timeline.Item color={t.color} key={index}>
-                      <Title level={5}>{t.title}</Title>
-                      <Text>{t.time}</Text>
-                    </Timeline.Item>
-                  ))}
-                </Timeline>
-                <Button
-                  type="primary"
-                  className="width-100"
-                  onClick={() => setReverse(!reverse)}
-                >
-                  {<MenuUnfoldOutlined />} REVERSE
-                </Button>
+                <Title level={5}>CẤU TRÚC PHÂN QUYỀN</Title>
               </div>
-            </Card>
-          </Col>
-        </Row>
-
-        <Row gutter={[24, 0]}>
-          <Col xs={24} md={12} sm={24} lg={12} xl={14} className="mb-24">
-            <Card bordered={false} className="criclebox h-full">
-              <Row gutter>
-                <Col
-                  xs={24}
-                  md={12}
-                  sm={24}
-                  lg={12}
-                  xl={14}
-                  className="mobile-24"
+              {/*  <Card
+                    bordered={false}
+                    className="timeline-card"
+                    style={{ height: "100%" }}
+                    key={index}
+                  >
+                    <Card
+                      style={{
+                        width: 300,
+                        marginTop: 16,
+                      }}
+                    >
+                      <Meta
+                        avatar={
+                          <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />
+                        }
+                        title={a.role}
+                        description="This is the description"
+                      />
+                    </Card>
+                  </Card> */}
+              {author.map((a, index) => (
+                <Card
+                  bordered={false}
+                  className="timeline-card"
+                  style={{ height: "100%" }}
+                  key={index}
                 >
-                  <div className="h-full col-content p-20">
-                    <div className="ant-muse">
-                      <Text>Built by developers</Text>
-                      <Title level={5}>WELOVESCHOOL for Ant Design</Title>
-                      <Paragraph className="lastweek mb-36">
-                        From colors, cards, typography to complex elements, you
-                        will find the full documentation.
-                      </Paragraph>
-                    </div>
-                    <div className="card-footer">
-                      <a className="icon-move-right" href="#pablo">
-                        Read More
-                        {<RightOutlined />}
-                      </a>
-                    </div>
-                  </div>
-                </Col>
-                <Col
-                  xs={24}
-                  md={12}
-                  sm={24}
-                  lg={12}
-                  xl={10}
-                  className="col-img"
-                >
-                  <div className="ant-cret text-right">
-                    <img src={card} alt="" className="border10" />
-                  </div>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-
-          <Col xs={24} md={12} sm={24} lg={12} xl={10} className="mb-24">
-            <Card bordered={false} className="criclebox card-info-2 h-full">
-              <div className="gradent h-full col-content">
-                <div className="card-content">
-                  <Title level={5}>Work with the best</Title>
-                  <p>
-                    Wealth creation is an evolutionarily recent positive-sum
-                    game. It is all about who take the opportunity first.
-                  </p>
-                </div>
-                <div className="card-footer">
-                  <a className="icon-move-right" href="#pablo">
-                    Read More
-                    <RightOutlined />
-                  </a>
-                </div>
-              </div>
+                  <Card>
+                    <Meta
+                      avatar={
+                        <Avatar src="https://api.dicebear.com/7.x/miniavs/svg?seed=1" />
+                      }
+                      title={a.role}
+                      description="This is the description"
+                    />
+                  </Card>
+                </Card>
+              ))}
             </Card>
           </Col>
         </Row>
