@@ -247,22 +247,36 @@ function Sidenav({ color }) {
             <span className="label">Quản lý người dùng</span>
           </NavLink>
         </Menu.Item>
-        <Menu.SubMenu key="sub1" title="Quản lý ">
-          <Menu.Item key="4">
-            <NavLink to="/manager-school">
-              <span
-                className="icon"
-                style={{
-                  background: page === "doctor" ? color : "",
-                }}
-              >
-                {billing}
-              </span>
-              <span className="label">Quản lý trường</span>
-            </NavLink>
-          </Menu.Item>
-          {/* Thêm các menu item khác vào đây */}
-        </Menu.SubMenu>
+        {/* <Menu.SubMenu key="sub1" title="Quản lý "> */}
+        <Menu.Item key="4">
+          <NavLink to="/manager-school">
+            <span
+              className="icon"
+              style={{
+                background: page === "doctor" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Quản lý trường</span>
+          </NavLink>
+        </Menu.Item>
+
+        <Menu.Item key="1">
+          <NavLink to="/manager-news">
+            <span
+              className="icon"
+              style={{
+                background: page === "news" ? color : "",
+              }}
+            >
+              {billing}
+            </span>
+            <span className="label">Quản lý tin tức</span>
+          </NavLink>
+        </Menu.Item>
+        {/* Thêm các menu item khác vào đây */}
+        {/* </Menu.SubMenu> */}
 
         {/* <Menu.Item key="4">
           <NavLink to="/rtl">

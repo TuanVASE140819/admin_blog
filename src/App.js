@@ -17,6 +17,7 @@ import Doctor from "./pages/manager-school";
 import EditSchool from "./pages/Edit-school";
 import EditAccount from "./pages/Edit-Account";
 import ManagerAccount from "./pages/manager-account";
+import ManagerNews from "./pages/manager-news";
 
 function PrivateRoute({ component: Component, ...rest }) {
   const isAuthenticated = localStorage.getItem("token");
@@ -56,6 +57,7 @@ function App() {
             component={ManagerAccount}
           />
           <PrivateRoute exact path="/blog" component={Blog} />
+          <PrivateRoute exact path="/manager-news" component={ManagerNews} />
           <PrivateRoute exact path="/billing" component={Billing} />
           <PrivateRoute exact path="/rtl" component={Rtl} />
           <PrivateRoute exact path="/profile" component={Profile} />
