@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card, Form } from "antd";
 import { list } from "firebase/storage";
+import { NavLink, useLocation } from "react-router-dom";
 
 // dât giả
 const data = [
@@ -139,7 +140,11 @@ const ManagerNews = () => (
           extra={<Button type="primary">Thêm mới</Button>}
         >
           {item.listNews.map((news, index) => {
-            return <Card.Grid style={gridStyle}>{news.Title}</Card.Grid>;
+            return (
+              <NavLink to="/new-detail">
+                <Card.Grid title={news.Title}>{news.Description}</Card.Grid>
+              </NavLink>
+            );
           })}
         </Card>
       );
